@@ -14,10 +14,10 @@ def clear_console():
 
 def choose_random_number():
   import random
-  result = random.choice(numbers)
+  return random.choice(numbers)
 
 
-def negative_balance():
+def negative_balance(balance):
   if balance <= 0:
     print('Você ficou sem saldo! O jogo acabou')
     return True
@@ -34,7 +34,7 @@ def start_roulette():
       time.sleep(0.2)
   
   drawn_number = choose_random_number()
-  print(f'O número sorteado foi {drawn_number}')
+  print(f'\nO número sorteado foi {drawn_number}')
 
   if drawn_number == 3:
     winnings = bet * 5
@@ -53,6 +53,11 @@ try:
     print(f'SALDO ATUAL: R${balance:.2f}')
     print(f'APOSTA MINIMA: R${minimum_bet:.2f}')
     bet = int(input(f'Valor da sua aposta: R$'))
+
+    if keyboard.is_pressed('esc'):
+        print('jogo encerrado!')
+        print('obrigado por jogar!')
+        exit()
     
     if bet < minimum_bet:
       clear_console()
@@ -67,8 +72,8 @@ try:
 
     start_roulette()
 
-    if negative_balance:
+    if negative_balance(balance):
       break
 
-except:
-  ...
+except Exception as e:
+  print(f'Erro no jogo: {e}')
