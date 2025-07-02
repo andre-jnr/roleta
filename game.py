@@ -1,5 +1,4 @@
 import time
-import random
 import keyboard
 
 # Initial setup
@@ -13,6 +12,16 @@ def clear_console():
   os.system('cls' if os.name == 'nt' else 'clear')
 
 
+def choose_random_number():
+  import random
+  result = random.choice(numbers)
+
+
+def negative_balance():
+  if balance <= 0:
+    print('Você ficou sem saldo! O jogo acabou')
+    return True
+
 def start_roulette():
   print('GIRANDO ROLETA')
   for _ in range(repetitions):
@@ -23,6 +32,18 @@ def start_roulette():
         exit()
       print(f'\r{i}', end='', flush=True)
       time.sleep(0.2)
+  
+  drawn_number = choose_random_number()
+  print(f'O número sorteado foi {drawn_number}')
+
+  if drawn_number == 3:
+    winnings = bet * 5
+    balance += winnings
+    print(f'Parabéns, você ganhou R${winnings}!')
+
+  else:
+    balance -= bet
+    print(f'Que pena! Você perdeu R${bet}.')
 
 print('CASSINO DO JUNIN')
 print('pressione ESC para sair do jogo')
@@ -45,6 +66,9 @@ try:
       continue
 
     start_roulette()
+
+    if negative_balance:
+      break
 
 except:
   ...
