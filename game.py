@@ -1,5 +1,4 @@
 import time
-import keyboard
 
 # Initial setup
 balance = 100
@@ -26,10 +25,6 @@ def start_roulette(initial_balance=0):
   print('GIRANDO ROLETA')
   for _ in range(repetitions):
     for i in numbers:
-      if keyboard.is_pressed('esc'):
-        print('jogo encerrado!')
-        print('obrigado por jogar!')
-        exit()
       print(f'\r{i}', end='', flush=True)
       time.sleep(0.2)
   
@@ -50,18 +45,13 @@ def start_roulette(initial_balance=0):
   return initial_balance
 
 print('CASSINO DO JUNIN')
-print('pressione ESC para sair do jogo')
+print('pressione qualquer letra para sair do jogo')
 
 try:
   while True:
     print(f'SALDO ATUAL: R${balance:.2f}')
     print(f'APOSTA MINIMA: R${minimum_bet:.2f}')
     bet = int(input(f'Valor da sua aposta: R$'))
-
-    if keyboard.is_pressed('esc'):
-        print('jogo encerrado!')
-        print('obrigado por jogar!')
-        exit()
     
     if bet < minimum_bet:
       clear_console()
@@ -78,6 +68,12 @@ try:
 
     if negative_balance(balance):
       break
+
+except ValueError:
+  clear_console()
+  print('Jogo finalizado!')
+  print(f'SALDO: R${balance:.2f}')
+  print('Obrigado, volte sempre!')
 
 except Exception as e:
   print(f'Erro no jogo: {e}')
