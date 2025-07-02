@@ -22,7 +22,7 @@ def negative_balance(balance):
     print('Você ficou sem saldo! O jogo acabou')
     return True
 
-def start_roulette():
+def start_roulette(initial_balance=0):
   print('GIRANDO ROLETA')
   for _ in range(repetitions):
     for i in numbers:
@@ -34,16 +34,20 @@ def start_roulette():
       time.sleep(0.2)
   
   drawn_number = choose_random_number()
-  print(f'\nO número sorteado foi {drawn_number}')
+  clear_console()
+  print(f'O número sorteado foi {drawn_number}')
 
   if drawn_number == 3:
     winnings = bet * 5
-    balance += winnings
+    initial_balance += winnings
     print(f'Parabéns, você ganhou R${winnings}!')
 
   else:
-    balance -= bet
+    initial_balance -= bet
     print(f'Que pena! Você perdeu R${bet}.')
+
+
+  return initial_balance
 
 print('CASSINO DO JUNIN')
 print('pressione ESC para sair do jogo')
@@ -70,7 +74,7 @@ try:
       print('Tente novamente!')
       continue
 
-    start_roulette()
+    balance = start_roulette(balance)
 
     if negative_balance(balance):
       break
